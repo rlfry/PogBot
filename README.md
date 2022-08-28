@@ -1,1 +1,3 @@
-# Discord-Music-Bot
+# PogBot
+
+Discord Music Bot
