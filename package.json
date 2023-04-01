@@ -22,10 +22,10 @@
     "@discordjs/opus": "^0.8.0",
     "@discordjs/rest": "^1.1.0",
     "@discordjs/voice": "^0.15.0",
-    "discord-player": "^6.1.1",
-    "discord.js": "^14.8.0",
+    "discord-player": "^5.3.1",
+    "discord.js": "^14.3.0",
     "dotenv": "^16.0.1",
     "opusscript": "^0.0.8",
-    "ytdl-core": "^4.11.3"
+    "ytdl-core": "^4.11.2"
   }
 }
