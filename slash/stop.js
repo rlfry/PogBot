@@ -14,7 +14,7 @@ module.exports = {
         queue.clear()
         await interaction.editReply("Bye!")
 
-        const result = await client.player.search("https://www.youtube.com/watch?v=Qi1KebO4bzc", {
+        /*const result = await client.player.search("https://www.youtube.com/watch?v=Qi1KebO4bzc", {
             requestedBy: interaction.user,
             searchEngine: QueryType.YOUTUBE_VIDEO
         })
@@ -24,6 +24,6 @@ module.exports = {
         const song = result.tracks[0]
         await queue.addTrack(song)
         await queue.play()
-        await queue.destroy()
+        await queue.destroy()*/
 	},
 }
