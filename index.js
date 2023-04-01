@@ -60,6 +60,8 @@ else {
     client.on("interactionCreate", (interaction) => {
         async function handleCommand() {
             if (!interaction.isCommand()) return
+            // TODO troubleshooting step
+            if (interaction.commandName == "stop") return
 
             const slashcmd = client.slashcommands.get(interaction.commandName)
 

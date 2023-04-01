@@ -8,11 +8,11 @@ module.exports = {
 
 		if (!queue) return await interaction.editReply("There are no songs in the queue")
 
+        //TODO fix this so it plays the dumb fart noise after it clears the queue
+
 		queue.stop()
         queue.clear()
-
-        //TODO fix this so it plays the dumb fart noise after it clears the queue
-        /*await interaction.editReply("Bye!")
+        await interaction.editReply("Bye!")
 
         const result = await client.player.search("https://www.youtube.com/watch?v=Qi1KebO4bzc", {
             requestedBy: interaction.user,
@@ -24,6 +24,6 @@ module.exports = {
         const song = result.tracks[0]
         await queue.addTrack(song)
         await queue.play()
-        await queue.destroy()*/
+        await queue.destroy()
 	},
 }
