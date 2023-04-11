@@ -8,10 +8,7 @@ module.exports = {
 
 		if (!queue) return await interaction.editReply("There are no songs in the queue")
 
-        //TODO fix this so it plays the dumb fart noise after it clears the queue
-
-		queue.stop()
-        queue.clear()
+		queue.destroy()
         await interaction.editReply("Bye!")
 
         /*const result = await client.player.search("https://www.youtube.com/watch?v=Qi1KebO4bzc", {
