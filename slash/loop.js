@@ -1,5 +1,6 @@
 const { SlashCommandBuilder } = require("@discordjs/builders")
 const { QueueRepeatMode } = require('discord-player');
+const { useMasterPlayer } = require("discord-player")
 
 module.exports = {
     data: new SlashCommandBuilder()
@@ -25,9 +26,10 @@ module.exports = {
                 .setName("autoplay")
                 .setDescription("Starts autoplaying music")
         ),
-    run: async ({ client, interaction }) => {
-        const queue = client.player.getQueue(interaction.guildId)
-        if (!queue || !queue.playing) {
+    run: async ({ interaction }) => {
+        const player = useMasterPlayer(); // Get the player instance that we created earlier
+        const queue = player.nodes.get(interaction.guildId)
+        if (!queue || !queue.node.isPlaying()) {
             return await interaction.editReply("No music is being played!")
         }
         if (interaction.options.getSubcommand() === "off") {

@@ -1,9 +1,8 @@
-const { Client, GatewayIntentBits, Collection} = require("discord.js")
 const dotenv = require("dotenv")
+const { Client, Collection } = require('discord.js');
 const { REST } = require("@discordjs/rest")
 const { Routes } = require("discord-api-types/v9")
 const fs = require("fs")
-const { Player } = require("discord-player")
 
 dotenv.config()
 const TOKEN = process.env.TOKEN
@@ -16,19 +15,15 @@ const CLIENT_ID = process.env.CLIENT_ID
 const GUILD_ID = process.env.GUILD_ID
 
 const client = new Client({
-    intents: [
-        GatewayIntentBits.Guilds,
-        GatewayIntentBits.GuildVoiceStates
-    ]
-})
+    intents: ['Guilds', 'GuildVoiceStates']
+});
 
 client.slashcommands = new Collection()
-client.player = new Player(client, {
-    ytdlOptions: {
-        quality: "highestaudio",
-        highWaterMark: 1 << 25
-    }
-})
+
+const { Player } = require("discord-player");
+
+// this is the entrypoint for discord-player based application
+const player = new Player(client);
 
 let commands = []
 
@@ -56,10 +51,13 @@ if (LOAD_SLASH) {
 else {
     client.on("ready", () => {
         console.log(`Logged in as ${client.user.tag}`)
-    })
+    });
     client.on("interactionCreate", (interaction) => {
         async function handleCommand() {
             if (!interaction.isCommand()) return
+
+            // This is to load the default extractors from the @discord-player/extractor package
+            await player.extractors.loadDefault();
 
             const slashcmd = client.slashcommands.get(interaction.commandName)
 
@@ -69,20 +67,11 @@ else {
             await slashcmd.run({ client, interaction })
         }
         handleCommand()
-    })
-    client.player.on('connectionCreate', (queue) => {
-        queue.connection.voiceConnection.on('stateChange', (oldState, newState) => {
-            const oldNetworking = Reflect.get(oldState, 'networking');
-            const newNetworking = Reflect.get(newState, 'networking');
-
-            const networkStateChangeHandler = (oldNetworkState, newNetworkState) => {
-              const newUdp = Reflect.get(newNetworkState, 'udp');
-              clearInterval(newUdp?.keepAliveInterval);
-            }
-
-            oldNetworking?.off('stateChange', networkStateChangeHandler);
-            newNetworking?.on('stateChange', networkStateChangeHandler);
-          });
-    })
+    });
+    // this event is emitted whenever discord-player starts to play a track
+    player.events.on('playerStart', (queue, track) => {
+        // we will later define queue.metadata object while creating the queue
+        queue.metadata.channel.send(`Started playing **${track.title}**`);
+    });
     client.login(TOKEN)
 }
