@@ -2,7 +2,7 @@
 
 ## Instructions
 
-`yarn add`
+`yarn install`
 
 `node index.js load`
 
