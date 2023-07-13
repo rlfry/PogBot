@@ -123,7 +123,7 @@ module.exports = {
                         searchEngine = QueryType.SPOTIFY_SEARCH
                         break;
                     default:
-                        searchEngine = QueryType.AUTO
+                        searchEngine = QueryType.YOUTUBE_SEARCH
                         break;
                 }
 
